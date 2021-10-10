@@ -71,7 +71,7 @@ namespace API
             //x is the policy
             //AllowAnyHeader - authentications
             //AllowAnyMethod - posts,gets...
-            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"));
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseAuthorization();
 

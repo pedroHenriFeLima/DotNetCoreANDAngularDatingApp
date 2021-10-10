@@ -15,8 +15,7 @@ namespace API
         {
             CreateHostBuilder(args).Build().Run();
         }
-        //One of the jobs of this method is to read configuration from several locations (including appsettings.json etc) 
-        //and load this configuration into memory
+
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>

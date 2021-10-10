@@ -68,11 +68,6 @@ namespace API
 
             app.UseRouting();
 
-            //x is the policy
-            //AllowAnyHeader - authentications
-            //AllowAnyMethod - posts,gets...
-            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"));
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

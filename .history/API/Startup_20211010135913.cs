@@ -31,7 +31,6 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             /*
-                ordering is not important in this method
                 Dependency injection container - if a class/service needs to be available to other areas of the application
                 .NET CORE will take of creating these classes and the distruction when not used
                 The DbContext class provides us with the ability to connect to the Database via EF.
@@ -42,7 +41,6 @@ namespace API
                 options.UseSqlite(_config.GetConnectionString("DefaultConnection"));
             });
             services.AddControllers();
-            services.AddCors();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
@@ -53,7 +51,6 @@ namespace API
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             /*
-            order is important here
             the request from the brower to an endpoint, it goes through a serie of middleware
             on the way in and on the way out
             */
@@ -67,11 +64,6 @@ namespace API
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            //x is the policy
-            //AllowAnyHeader - authentications
-            //AllowAnyMethod - posts,gets...
-            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"));
 
             app.UseAuthorization();
 
