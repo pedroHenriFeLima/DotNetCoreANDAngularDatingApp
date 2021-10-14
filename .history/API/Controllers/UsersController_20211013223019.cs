@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using API.Data;
 using API.Entities;
 using System.Linq;
-using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
@@ -24,7 +23,6 @@ namespace API.Controllers
         }
 
         //endPoint to get all users
-        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers(){
             //returning a list of users asyncronously
@@ -33,7 +31,6 @@ namespace API.Controllers
 
         //endPoint to get a specific user
         //api/users/3
-        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<AppUser>> GetUser(int id){
             return await _context.Users.FindAsync(id);

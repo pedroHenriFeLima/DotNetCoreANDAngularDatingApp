@@ -43,10 +43,6 @@ namespace API
                 The DbContext class provides us with the ability to connect to the Database via EF.
                 In order to use this as a service we need to add it to the ConfigureServices method.
             */
-            /*
-            the methods AddApplicationServices & AddIdentityServices are used in this class so the startup class
-            can be kept clean
-            */
             services.AddApplicationServices(_config);
             services.AddIdentityServices(_config);
             services.AddControllers();

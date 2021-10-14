@@ -18,7 +18,6 @@ using API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using API.Extensions;
 
 namespace API
 {
@@ -43,17 +42,29 @@ namespace API
                 The DbContext class provides us with the ability to connect to the Database via EF.
                 In order to use this as a service we need to add it to the ConfigureServices method.
             */
-            /*
-            the methods AddApplicationServices & AddIdentityServices are used in this class so the startup class
-            can be kept clean
-            */
-            services.AddApplicationServices(_config);
-            services.AddIdentityServices(_config);
+            services.AddScoped<ITokenService, TokenService>();
+            services.AddDbContext<DataContext>(options => {
+                options.UseSqlite(_config.GetConnectionString("DefaultConnection"));
+            });
             services.AddControllers();
             services.AddCors();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
+            });
+            //using Microsoft.AspNetCore.Authentication.JwtBearer;
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer
+            (options => {
+                //using Microsoft.IdentityModel.Tokens;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {   
+                    //ensure users are validated with a good token
+                    ValidateIssuerSigningKey = true,
+                    //using System.Text;
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["TokenKey"])),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
             });
         }
 
